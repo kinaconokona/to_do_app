@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../static/style.css">
+    <title>To Do App</title>
+</head>
+<body>
+    <header>
+        <h1 class="titel">To Do App</h1>
+        <nav>
+            <ul>
+                <li class="menu-item"><a href="">項目追加</a></li>
+                <li class="menu-item"><a href="">項目削除</a></li>
+                <li class="menu-item"><a href="">項目編集</a></li>
+                <li class="menu-item"><a href="">項目完了</a></li>
+                <li class="menu-item"><a href="">項目未完了</a></li>
+                <li class="menu-item"><a href="">項目全削除</a></li>
+                <li class="menu-item"><a href="">項目全完了</a></li>
+                <li class="menu-item"><a href="">項目全未完了</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <div class="container">
+            <h1>Todo App</h1>
+            <form method="POST" action="/add">
+                <input type="text" name="title" id="title" placeholder="Add Todo" required>
+                <button type="submit">Add</button>
+            </form>
+            <div class="todo-list-container">
+                <ul>
+                    {% for todo in todo_list %}
+                    <li class="{% if todo.completed %}completed{% endif %}">
+                        <form method="POST" action="/toggle/{{ todo.id }}" style="display: inline;">
+                            <input type="checkbox" 
+                                {% if todo.completed %}checked{% endif %}
+                                onchange="this.form.submit()">
+                                </form>
+                                <span class="todo-title">{{ todo.title }}</span>
+                                <form method="POST" action="/delete/{{ todo.id }}" style="display: inline;">
+                                    <button type="submit">Delete</button>
+                        </form>
+                    </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+    </main>
+    
+</body>
+</html>
